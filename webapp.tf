@@ -17,12 +17,12 @@ resource "aws_elb" "webapp" {
   availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d"]
 
   /*
-    access_logs {
-      bucket = "foo"
-      bucket_prefix = "bar"
-      interval = 60
-    }
-  */
+        access_logs {
+          bucket = "foo"
+          bucket_prefix = "bar"
+          interval = 60
+        }
+      */
 
   listener {
     instance_port     = 80
@@ -49,13 +49,13 @@ resource "aws_elb" "webapp" {
 
 /* web server service */
 resource "aws_ecs_service" "web_server" {
-  name            = "web_server"
-  cluster         = "${aws_ecs_cluster.default.id}"
-  task_definition = "${aws_ecs_task_definition.web.arn}"
-  deployment_minimum_healthy_percent = 0 /* Allow full stop for changes */
-  desired_count   = 1                    /* start with 0, then turn up after DB migration */
-  iam_role        = "${aws_iam_role.ecs_role.arn}"
-  depends_on      = ["aws_iam_policy_attachment.ecs-service-policy-attach"]
+  name                               = "web_server"
+  cluster                            = "${aws_ecs_cluster.default.id}"
+  task_definition                    = "${aws_ecs_task_definition.web.arn}"
+  deployment_minimum_healthy_percent = 0                                                       /* Allow full stop for changes */
+  desired_count                      = 0                                                       /* start with 0, then turn up after DB migration */
+  iam_role                           = "${aws_iam_role.ecs_role.arn}"
+  depends_on                         = ["aws_iam_policy_attachment.ecs-service-policy-attach"]
 
   load_balancer {
     elb_name       = "${aws_elb.webapp.name}"
@@ -66,7 +66,7 @@ resource "aws_ecs_service" "web_server" {
 
 /* Nice name */
 resource "aws_route53_record" "webapp" {
-  zone_id = "${aws_route53_zone.primary.zone_id}"
+  zone_id = "${var.dns_zone_id}"
   name    = "${var.webapp_name}.${var.dns_root}"
   type    = "CNAME"
   ttl     = "300"

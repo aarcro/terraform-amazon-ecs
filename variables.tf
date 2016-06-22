@@ -15,6 +15,10 @@ variable "dns_root" {
   default     = "aws.example.com"
 }
 
+variable "dns_zone_id" {
+  description = "The AWS identifier for the hosted zone to add names to"
+}
+
 variable "ecs_cluster_name" {
   description = "The name of the Amazon ECS cluster."
   default     = "default"
