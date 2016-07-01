@@ -16,20 +16,13 @@ resource "aws_elb" "webapp" {
   name               = "webapp-terraform-elb"
   availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d"]
 
-  /*
-        access_logs {
-          bucket = "foo"
-          bucket_prefix = "bar"
-          interval = 60
-        }
-      */
-
   listener {
     instance_port     = 80
     instance_protocol = "http"
     lb_port           = 80
     lb_protocol       = "http"
   }
+
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
@@ -37,10 +30,12 @@ resource "aws_elb" "webapp" {
     target              = "HTTP:80/en/"
     interval            = 30
   }
+
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
+
   tags {
     Name      = "webapp-terraform-elb"
     ManagedBy = "Terraform"
