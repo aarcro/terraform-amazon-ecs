@@ -4,7 +4,7 @@ resource "aws_ecs_task_definition" "jenkins" {
 
   volume {
     name      = "jenkins_home"
-    host_path = "/ecs/jenkins_home"
+    host_path = "/var/jenkins_home"
   }
 
   volume {

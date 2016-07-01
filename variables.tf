@@ -44,16 +44,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "key_name" {
-  description = "The aws ssh key name."
-  default     = ""
-}
-
-variable "key_file" {
-  description = "The ssh public key for using with the cloud provider."
-  default     = ""
-}
-
 variable "s3_jenkins_backup" {
   description = "bucket/path to use to populate jenkins_home"
 }
