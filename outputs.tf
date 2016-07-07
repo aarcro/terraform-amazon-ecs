@@ -1,4 +1,4 @@
-output "registry.dns_name" {
+output "registry.url" {
   value = "${aws_ecr_repository.webapp.repository_url}"
 }
 
@@ -8,6 +8,10 @@ output "jenkins.dns_name" {
 
 output "dns_zone_id" {
   value = "${var.dns_zone_id}"
+}
+
+output "ecs_security_group_id" {
+  value = "${aws_security_group.ecs.id}"
 }
 
 output "ecs_cluster_id" {
